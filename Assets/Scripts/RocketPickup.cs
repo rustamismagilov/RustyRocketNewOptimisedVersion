@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RocketPickup: MonoBehaviour
+public class RocketPickup : MonoBehaviour
 {
     public Transform holdPoint;
     private GameObject heldObject;
@@ -41,7 +41,11 @@ public class RocketPickup: MonoBehaviour
     void Drop()
     {
         var rb = heldObject.GetComponent<Rigidbody>();
-        if (rb) rb.isKinematic = false;
+        if (rb)
+        {
+            rb.isKinematic = false;
+            rb.AddForce(transform.forward * 2f, ForceMode.Impulse);
+        }
 
         heldObject.transform.SetParent(null);
         heldObject = null;
