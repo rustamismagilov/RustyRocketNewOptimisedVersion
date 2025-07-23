@@ -25,17 +25,22 @@ public class CollisionHandler: MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Start":
+                Debug.Log("Start");
                 break;
             case "Finish":
+                Debug.Log("Finish");
                 StartSuccessSequence();
                 break;
             case "Fuel":
+                Debug.Log("Fuel");
                 Destroy(other.gameObject);
                 break;
             case "Enemy":
+                Debug.Log("Enemy");
                 HandleEnemyCollision(other);
                 break;
             default:
+                Debug.Log("Bumped into obstacle");
                 HandleCrash(other); 
                 break;
 

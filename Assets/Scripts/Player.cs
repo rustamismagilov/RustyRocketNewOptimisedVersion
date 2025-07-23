@@ -1,30 +1,35 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player: MonoBehaviour
 {
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 1f;
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip backgroundMusic;
     [SerializeField] float backgroundVolume = 1f;
-
+    
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
-
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioSource backgroundAudioSource; 
-
+    
+    
     public Rigidbody rb;
-
+    public AudioSource audioSource;
+    public AudioSource backgroundAudioSource;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        audioSource = gameObject.AddComponent<AudioSource>();
+        // audioSource= FindFirstObjectByType<AudioSource>(); //only if there is only one audiosource
+        
+        backgroundAudioSource = gameObject.AddComponent<AudioSource>();
+        
         backgroundAudioSource.clip = backgroundMusic;
         backgroundAudioSource.volume = backgroundVolume;
         backgroundAudioSource.loop = true;
         backgroundAudioSource.Play();
+
     }
 
     void Update()
@@ -36,8 +41,10 @@ public class Player : MonoBehaviour
     void ProcessThrust()
     {
         float currentThrust = mainThrust;
-        bool isThrusting = false;
+        bool isThrusting = false; 
 
+        // Speed
+        
         if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
         {
             currentThrust *= 0.4f; // Safe landing / slow down
@@ -47,9 +54,11 @@ public class Player : MonoBehaviour
             currentThrust *= 2f; // Speed boost
         }
 
+        // Upward thrust
+        
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * (currentThrust * Time.deltaTime));
+            rb.AddRelativeForce (Vector3.up * (currentThrust * Time.deltaTime));
             isThrusting = true;
 
             if (!audioSource.isPlaying)
@@ -58,11 +67,15 @@ public class Player : MonoBehaviour
             }
         }
 
+        // Forward thrust
+        
         if (Input.GetKey(KeyCode.UpArrow))
         {
             rb.AddRelativeForce(Vector3.forward * (currentThrust * Time.deltaTime));
             isThrusting = true;
         }
+
+        //Particles/ audio
 
         if (isThrusting)
         {
@@ -76,7 +89,7 @@ public class Player : MonoBehaviour
             audioSource.Stop();
             mainEngineParticles.Stop();
         }
-    }
+    } 
 
     void ProcessRotation()
     {
@@ -97,7 +110,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             ApplyRotation(rotationThrust);
-
+            
             if (!leftThrusterParticles.isPlaying)
             {
                 leftThrusterParticles.Play();
@@ -107,7 +120,7 @@ public class Player : MonoBehaviour
         {
             leftThrusterParticles.Stop();
         }
-
+        
         if (Input.GetKey(KeyCode.DownArrow))
         {
             rb.AddRelativeForce(-Vector3.forward * (mainThrust * Time.deltaTime));
@@ -119,5 +132,6 @@ public class Player : MonoBehaviour
         float rotationAngle = rotationThisFrame * Time.deltaTime;
         Quaternion deltaRotation = Quaternion.Euler(0f, rotationAngle, 0f);
         rb.MoveRotation(rb.rotation * deltaRotation);
-    }
+    } 
+    
 }

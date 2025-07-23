@@ -13,6 +13,7 @@ public class Health: MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        Debug.Log("Health:" + currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -22,6 +23,7 @@ public class Health: MonoBehaviour
 
     void Die()
     {
+        Debug.Log("crashed!");
         gameObject.SetActive(false);
     }
 

@@ -28,6 +28,7 @@ public class Shooter: MonoBehaviour
             {
                 if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.V))
                 {
+                    Debug.Log("Shooting triggered");
                     Shoot(damage);
                     shootTimer = shootInterval;
                 }

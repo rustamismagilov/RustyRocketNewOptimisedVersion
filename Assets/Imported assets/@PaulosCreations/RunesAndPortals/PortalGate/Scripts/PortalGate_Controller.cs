@@ -1,112 +1,147 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class PortalGateController : MonoBehaviour
+public class PortalGate_Controller : MonoBehaviour
 {
-    [Header("Effect Settings")]
-    [SerializeField] private Color portalColor;
-    [SerializeField] private Renderer portalRenderer;
-    [SerializeField] private ParticleSystem[] particleSystems;
-    [SerializeField] private Light portalLight;
-    [SerializeField] private Transform symbol;
-    [SerializeField] private AudioSource portalAudio;
-    [SerializeField] private AudioSource flashAudio;
+    [Header("Applied to the effects at start")]
+    [SerializeField] private Color portalEffectColor;
 
+    [Header("Changing these might `break` the effects")]
+    [Space(20)]
+    [SerializeField] private Renderer portalRenderer;
+    [SerializeField] private ParticleSystem[] effectsPartSystems;
+    [SerializeField] private Light portalLight;
+    [SerializeField] private Transform symbolTF;
+    [SerializeField] private AudioSource portalAudio, flashAudio;
+
+    private bool portalActive, inTransition;
+    private float transitionF, lightF;
     private Material portalMat, portalEffectMat;
     private Vector3 symbolStartPos;
 
-    private bool portalActive, inTransition;
-    private float transitionProgress, initialLightIntensity;
+    private Coroutine transitionCor, symbolMovementCor;
 
-    private Coroutine transitionRoutine, symbolRoutine;
-
-    void OnEnable()
+    private void OnEnable()
     {
-        var mats = portalRenderer.materials;
+        //get materials to set color and emmision
+        Material[] mats = portalRenderer.materials.ToArray();
         portalMat = mats[0];
         portalEffectMat = mats[1];
 
-        portalMat.SetColor("_EmissionColor", portalColor);
+        portalMat.SetColor("_EmissionColor", portalEffectColor);
         portalMat.SetFloat("_EmissionStrength", 0);
-        portalEffectMat.SetColor("_ColorMain", portalColor);
-        portalEffectMat.SetFloat("_PortalFade", 0);
+        portalEffectMat.SetColor("_ColorMain", portalEffectColor);
+        portalEffectMat.SetFloat("_PortalFade", 0f);
 
-        portalLight.color = portalColor;
-        initialLightIntensity = portalLight.intensity;
+        symbolStartPos = symbolTF.localPosition;
+        symbolTF.GetComponent<Renderer>().material = portalMat;
+
+        //get and set light intensity
+        portalLight.color = portalEffectColor;
+        lightF = portalLight.intensity;
         portalLight.intensity = 0;
 
-        symbolStartPos = symbol.localPosition;
-        symbol.GetComponent<Renderer>().material = portalMat;
-
-        foreach (var ps in particleSystems)
+        foreach (ParticleSystem part in effectsPartSystems)
         {
-            var main = ps.main;
-            main.startColor = portalColor;
+            ParticleSystem.MainModule mod = part.main;
+            mod.startColor = portalEffectColor;
         }
     }
 
-    public void TogglePortal(bool activate)
+    public void F_TogglePortalGate(bool _activate)
     {
-        if (inTransition || portalActive == activate) return;
+        if (inTransition || portalActive == _activate)
+            return;
 
-        portalActive = activate;
+        portalActive = _activate;
 
-        foreach (var ps in particleSystems)
+        if (_activate)//activate
         {
-            if (activate) ps.Play(); else ps.Stop();
-        }
+            foreach (ParticleSystem part in effectsPartSystems)
+            {
+                part.Play();
+            }
 
-        if (activate)
-        {
             portalAudio.Play();
             flashAudio.Play();
-            if (symbolRoutine != null) StopCoroutine(symbolRoutine);
-            symbolRoutine = StartCoroutine(AnimateSymbol());
+
+            symbolMovementCor = StartCoroutine(SymbolMovement());
+        }
+        else if (!_activate)//deactivate
+        {
+            foreach (ParticleSystem part in effectsPartSystems)
+            {
+                part.Stop();
+            }
         }
 
-        if (transitionRoutine != null) StopCoroutine(transitionRoutine);
-        transitionRoutine = StartCoroutine(AnimatePortal());
+        if (!inTransition)
+            transitionCor = StartCoroutine(PortalTransition());
     }
 
-    IEnumerator AnimatePortal()
+    IEnumerator PortalTransition()
     {
         inTransition = true;
-        float speed = portalActive ? 0.2f : 0.4f;
-        float target = portalActive ? 1f : 0f;
 
-        while (!Mathf.Approximately(transitionProgress, target))
+        if (portalActive)//fade in
         {
-            transitionProgress = Mathf.MoveTowards(transitionProgress, target, Time.deltaTime * speed);
-            portalMat.SetFloat("_EmissionStrength", transitionProgress);
-            portalEffectMat.SetFloat("_PortalFade", transitionProgress * 0.4f);
-            portalLight.intensity = initialLightIntensity * transitionProgress;
-            portalAudio.volume = transitionProgress * 0.8f;
-            yield return null;
+            while (transitionF < 1f)
+            {
+                transitionF = Mathf.MoveTowards(transitionF, 1, Time.deltaTime * 0.2f);
+
+                portalMat.SetFloat("_EmissionStrength", transitionF);
+                portalEffectMat.SetFloat("_PortalFade", transitionF * 0.4f);
+                portalLight.intensity = lightF * transitionF;
+                portalAudio.volume = transitionF * 0.8f;//max volume
+
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+
+            inTransition = false;
+            StopCoroutine(transitionCor);
         }
-
-        if (!portalActive)
+        else if (!portalActive)//fade out
         {
+            while (transitionF > 0f)
+            {
+                transitionF = Mathf.MoveTowards(transitionF, 0f, Time.deltaTime * 0.4f);
+
+                portalMat.SetFloat("_EmissionStrength", transitionF);
+                portalEffectMat.SetFloat("_PortalFade", transitionF * 0.4f);
+                portalLight.intensity = lightF * transitionF;
+                portalAudio.volume = transitionF * 0.8f;//max volume
+
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+
             portalAudio.Stop();
-            if (symbolRoutine != null) StopCoroutine(symbolRoutine);
+            inTransition = false;
+            StopCoroutine(symbolMovementCor);
+            StopCoroutine(transitionCor);
         }
-
-        inTransition = false;
     }
 
-    IEnumerator AnimateSymbol()
+    private IEnumerator SymbolMovement()
     {
-        Vector3 targetPos = symbolStartPos;
-        float lerpSpeed = 0.001f;
+        Vector3 randomPos = symbolStartPos;
+        float lerpF = 0;
 
         while (true)
         {
-            if (symbol.localPosition == targetPos)
+            if (symbolTF.localPosition == randomPos)
             {
-                targetPos = symbolStartPos + new Vector3(0, Random.Range(-0.08f, 0.08f), Random.Range(-0.08f, 0.08f));
+                randomPos[1] = Random.Range(-0.08f, 0.08f);
+                randomPos[2] = Random.Range(-0.08f, 0.08f);
+
+                randomPos = symbolStartPos + randomPos;
+                lerpF = 0f;
             }
             else
             {
-                symbol.localPosition = Vector3.Slerp(symbol.localPosition, targetPos, lerpSpeed);
+                symbolTF.localPosition = Vector3.Slerp(symbolTF.localPosition, randomPos, lerpF);
+                lerpF += 0.001f;
             }
 
             yield return new WaitForSeconds(0.04f);
