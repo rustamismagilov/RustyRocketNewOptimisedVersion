@@ -1,128 +1,140 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalRoundController : MonoBehaviour
+public class PortalRound_Controller : MonoBehaviour 
 {
     [Header("Applied to the effects at start")]
     [SerializeField] private Color effectsColor;
 
     [Header("Changing these might `break` the effects")]
+    [Space(20)]
     [SerializeField] private ParticleSystem[] effectsPartSystems;
     [SerializeField] private Light portalLight;
     [SerializeField] private Transform portalRoundMeshTF;
     [SerializeField] private AudioSource portalAudio;
-
     [Space(10)]
     [SerializeField] private bool floatingAnimationOn = true;
     [SerializeField] private AnimationCurve floatingCurve;
 
     private bool portalActive, inTransition, isFloating;
-    private float transitionValue, baseLightIntensity, evalFloat, floatSpeed = 0.2f;
+    private float transitionF, lightF, evalFloat, floatSpeed = 0.2f;
     private Material portalMaterial;
+    private Transform portalTF;
     private Vector3 originalPosition;
 
-    private Coroutine transitionRoutine, floatingRoutine;
+    private Coroutine transitionCor, floatingMovementCor;
 
     private void OnEnable()
     {
-        originalPosition = transform.position;
+        portalTF = transform;
+        originalPosition = portalTF.position;
+
+        //get the material to set emmision
         portalMaterial = portalRoundMeshTF.GetComponent<Renderer>().material;
         portalMaterial.SetColor("_EmissionColor", effectsColor);
         portalMaterial.SetFloat("_EmissionStrength", 0);
 
+        //get and set light intensity
         portalLight.color = effectsColor;
-        baseLightIntensity = portalLight.intensity;
+        lightF = portalLight.intensity;
         portalLight.intensity = 0;
 
-        foreach (var ps in effectsPartSystems)
+        foreach (ParticleSystem part in effectsPartSystems)
         {
-            var main = ps.main;
-            main.startColor = effectsColor;
+            ParticleSystem.MainModule mod = part.main;
+            mod.startColor = effectsColor;
         }
     }
 
-    public void TogglePortalRound(bool activate)
-    {
-        if (portalActive == activate) return;
-
-        portalActive = activate;
-
-        if (transitionRoutine != null)
-            StopCoroutine(transitionRoutine);
-
-        transitionRoutine = StartCoroutine(PortalTransition());
-
-        if (activate)
-        {
-            foreach (var ps in effectsPartSystems)
-                ps.Play();
-
-            portalAudio.Play();
-
-            if (floatingAnimationOn && !isFloating)
-                floatingRoutine = StartCoroutine(FloatingMovement());
-        }
-        else
-        {
-            foreach (var ps in effectsPartSystems)
-                ps.Stop();
-
-            if (isFloating)
-            {
-                StopCoroutine(floatingRoutine);
-                isFloating = false;
-            }
-        }
-    }
-
-    private IEnumerator PortalTransition()
+    IEnumerator PortalTransition()
     {
         inTransition = true;
 
-        if (portalActive)
+        if (portalActive)//fade in
         {
-            while (transitionValue < 1f)
+            while (transitionF < 1f)
             {
-                transitionValue = Mathf.MoveTowards(transitionValue, 1f, Time.deltaTime * 0.1f);
-                UpdatePortalVisuals();
-                yield return null;
+                transitionF = Mathf.MoveTowards(transitionF, 1, Time.deltaTime * 0.1f);
+
+                portalMaterial.SetFloat("_EmissionStrength", transitionF);
+                portalLight.intensity = lightF * transitionF;
+                portalAudio.volume = transitionF * 0.8f;//max volume
+
+                yield return new WaitForSeconds(Time.deltaTime);
             }
+
+            inTransition = false;
+            StopCoroutine(transitionCor);
         }
-        else
+        else if (!portalActive)//fade out
         {
-            while (transitionValue > 0f)
+            while (transitionF > 0f)
             {
-                transitionValue = Mathf.MoveTowards(transitionValue, 0f, Time.deltaTime * 0.4f);
-                UpdatePortalVisuals();
-                yield return null;
+                transitionF = Mathf.MoveTowards(transitionF, 0f, Time.deltaTime * 0.4f);
+
+                portalMaterial.SetFloat("_EmissionStrength", transitionF);
+                portalLight.intensity = lightF * transitionF;
+                portalAudio.volume = transitionF * 0.8f;//max volume
+
+                yield return new WaitForSeconds(Time.deltaTime);
             }
 
             portalAudio.Stop();
+            inTransition = false;
+            StopCoroutine(transitionCor);
         }
-
-        inTransition = false;
-    }
-
-    private void UpdatePortalVisuals()
-    {
-        portalMaterial.SetFloat("_EmissionStrength", transitionValue);
-        portalLight.intensity = baseLightIntensity * transitionValue;
-        portalAudio.volume = transitionValue * 0.8f;
     }
 
     private IEnumerator FloatingMovement()
     {
         isFloating = true;
+        Vector3 wantedPosition = originalPosition;
 
         while (true)
         {
+            if (evalFloat >= 1)
+                evalFloat = 0;
+
             evalFloat += Time.deltaTime * floatSpeed;
-            if (evalFloat >= 1f) evalFloat = 0f;
 
-            var offset = floatingCurve.Evaluate(evalFloat);
-            transform.position = originalPosition + Vector3.up * offset;
+            wantedPosition[1] = originalPosition.y + floatingCurve.Evaluate(evalFloat);
+            portalTF.position = wantedPosition;
 
-            yield return null;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
+    }
+
+    public void F_TogglePortalRound(bool _activate)
+    {
+        if (portalActive == _activate)
+            return;
+
+        portalActive = _activate;
+
+        if (_activate)//activate
+        {
+            foreach (ParticleSystem partSys in effectsPartSystems)
+                partSys.Play();
+
+            portalAudio.Play();
+
+            if (floatingAnimationOn && !isFloating)
+                floatingMovementCor = StartCoroutine(FloatingMovement());
+        }
+        else if (!_activate)//deactivate
+        {
+            foreach (ParticleSystem partSys in effectsPartSystems)
+                partSys.Stop();
+
+            if (isFloating)
+            {
+                StopCoroutine(floatingMovementCor);
+                isFloating = false;
+            }
+        }
+
+        if (!inTransition)
+            transitionCor = StartCoroutine(PortalTransition());
     }
 }

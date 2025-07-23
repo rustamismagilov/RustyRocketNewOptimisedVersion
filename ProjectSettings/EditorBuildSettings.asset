@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StorageRoom.unity
     guid: 56fc5d72869b04f1bbffcae2f5192c95
+  - enabled: 1
+    path: Assets/Scenes/PinkDollHouse.unity
+    guid: 015b41ea6aebe4c25aa9917958de5e4a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
