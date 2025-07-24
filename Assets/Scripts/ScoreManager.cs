@@ -12,8 +12,14 @@ public class ScoreManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -35,6 +41,8 @@ public class ScoreManager : MonoBehaviour
     private void UpdateScoreText()
     {
         if (scoreText != null)
+        {
             scoreText.text = "Score: " + score;
+        }
     }
 }

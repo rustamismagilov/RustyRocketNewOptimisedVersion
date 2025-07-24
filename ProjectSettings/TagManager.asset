@@ -8,12 +8,8 @@ TagManager:
   - Portal
   - Start
   - Enemy
-  - AlienFriend
   - Undefined
   - SpawnPoint1
-  - PortalStorageRoom
-  - PortalPinkRoom
-  - PortalPlanet1
   layers:
   - Default
   - TransparentFX
