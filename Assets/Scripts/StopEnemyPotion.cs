@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StopEnemyPotion: MonoBehaviour
+public class StopEnemyPotion : MonoBehaviour
 {
     public float stopDuration = 5f;
     public float stopRadius = 10f;

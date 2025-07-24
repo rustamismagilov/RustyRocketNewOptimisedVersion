@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
         BroadcastMessage("OnDamageTaken");
 
         hitPoints -= damage;
-        
+
         if (bloodEffect != null)
         {
             Instantiate(bloodEffect, transform.position + Vector3.up * 1.2f, Quaternion.identity);

@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Thrust Settings")]
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 1f;
+
+    [Header("Audio Settings")]
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip backgroundMusic;
     [SerializeField] float backgroundVolume = 1f;
 
+    [Header("Particle Effects")]
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
+
+    [Header("Damping Settings")]
+    [SerializeField] float linearDampingToSlowdown = 10f;
+    [SerializeField] float linearDampingChangeRate = 2f;
 
     Rigidbody rb;
     AudioSource audioSource;
@@ -28,7 +36,7 @@ public class PlayerController : MonoBehaviour
         backgroundAudioSource.Play();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         ProcessThrust();
         ProcessRotation();
@@ -40,11 +48,17 @@ public class PlayerController : MonoBehaviour
         bool isThrusting = false;
 
         // Speed modifiers
-        if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
-        {
-            currentThrust *= 0.4f;
-        }
-        else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        // If the left Alt key is pressed, apply linear damping
+        // to slow down the Player's movement
+        float targetDamping = Input.GetKey(KeyCode.LeftAlt) ? linearDampingToSlowdown : 0f;
+
+        // how fast to change damping: total delta (10) over 2 seconds
+        float dampingChangeRate = linearDampingToSlowdown / linearDampingChangeRate;
+
+        // move current damping toward target at that rate
+        rb.linearDamping = Mathf.MoveTowards(rb.linearDamping, targetDamping, dampingChangeRate * Time.deltaTime);        
+
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             currentThrust *= 2f;
         }

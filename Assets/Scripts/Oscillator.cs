@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Oscillator: MonoBehaviour
+public class Oscillator : MonoBehaviour
 {
     [SerializeField] Vector3 movementVector = Vector3.up;
     Vector3 startingPos;
@@ -14,9 +14,7 @@ public class Oscillator: MonoBehaviour
 
     void Update()
     {
-        float newPos = Mathf.PingPong(Time.time * movementSpeed,distance);
+        float newPos = Mathf.PingPong(Time.time * movementSpeed, distance);
         transform.position = startingPos + movementVector.normalized * newPos;
     }
 }
-
-

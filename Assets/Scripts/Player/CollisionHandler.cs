@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CollisionHandler: MonoBehaviour
-{   
+public class CollisionHandler : MonoBehaviour
+{
     [SerializeField] private float levelLoadDelay = 2f;
     [SerializeField] private AudioClip successSound;
     [SerializeField] private AudioClip crashSound;
@@ -40,8 +40,8 @@ public class CollisionHandler: MonoBehaviour
                 HandleEnemyCollision(other);
                 break;
             default:
-                Debug.Log("Bumped into obstacle");
-                HandleCrash(other); 
+                Debug.Log($"Bumped into {other.gameObject.name}");
+                HandleCrash(other);
                 break;
 
         }
@@ -57,24 +57,25 @@ public class CollisionHandler: MonoBehaviour
 
             if (health.GetHealth() <= 0)
             {
+                audioSource.PlayOneShot(crashSound);
                 GetComponent<PlayerController>().enabled = false;
                 Invoke(nameof(ReloadLevel), levelLoadDelay);
             }
         }
-    } 
+    }
+
     void HandleEnemyCollision(Collision other)
     {
         health.TakeDamage(enemyDamageAmount);
-    
+
         audioSource.PlayOneShot(crashSound);
-    
+
         if (health.GetHealth() <= 0)
         {
             GetComponent<PlayerController>().enabled = false;
             Invoke(nameof(ReloadLevel), levelLoadDelay);
         }
     }
-
 
     void ReloadLevel()
     {
@@ -97,12 +98,5 @@ public class CollisionHandler: MonoBehaviour
         audioSource.PlayOneShot(successSound);
         GetComponent<PlayerController>().enabled = false;
         Invoke(nameof(LoadNextLevel), levelLoadDelay);
-    }
-
-    void StartCrashSequence()
-    {
-        audioSource.PlayOneShot(crashSound);
-        GetComponent<PlayerController>().enabled = false;
-        Invoke(nameof(ReloadLevel), levelLoadDelay);
     }
 }
