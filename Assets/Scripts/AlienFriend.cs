@@ -14,7 +14,7 @@ public class AlienFriend: MonoBehaviour
         shooter = GetComponent<Shooter>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (player == null) return;
 
