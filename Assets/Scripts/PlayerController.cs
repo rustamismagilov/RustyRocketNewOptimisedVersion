@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 1f;
@@ -12,9 +12,9 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
 
-    public Rigidbody rb;
-    public AudioSource audioSource;
-    public AudioSource backgroundAudioSource;
+    Rigidbody rb;
+    AudioSource audioSource;
+    AudioSource backgroundAudioSource;
 
     void Start()
     {

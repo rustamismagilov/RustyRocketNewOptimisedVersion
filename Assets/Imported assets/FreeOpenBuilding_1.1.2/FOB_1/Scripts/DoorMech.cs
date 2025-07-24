@@ -19,7 +19,7 @@ public class DoorMech : MonoBehaviour
 		
 	void OnTriggerStay(Collider col)
 	{
-		if(col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.E))
+		if(col.gameObject.tag == ("PlayerController") && Input.GetKeyDown(KeyCode.E))
 		{
 			if (!doorBool)
 				doorBool = true;

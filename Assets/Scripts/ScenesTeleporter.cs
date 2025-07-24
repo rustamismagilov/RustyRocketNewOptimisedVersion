@@ -7,7 +7,7 @@ public class ScenesTeleporter : MonoBehaviour
 {
    private void OnTriggerEnter(Collider other)
    {
-      if (other.CompareTag("Player") || other.CompareTag("AlienFriend") || other.CompareTag("Enemy"))
+      if (other.CompareTag("PlayerController") || other.CompareTag("AlienCompanion") || other.CompareTag("Enemy"))
       {
          PlayerPrefs.SetString("LastPortalTag", gameObject.tag);
          PlayerPrefs.Save();

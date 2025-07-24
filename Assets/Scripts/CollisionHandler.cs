@@ -57,7 +57,7 @@ public class CollisionHandler: MonoBehaviour
 
             if (health.GetHealth() <= 0)
             {
-                GetComponent<Player>().enabled = false;
+                GetComponent<PlayerController>().enabled = false;
                 Invoke(nameof(ReloadLevel), levelLoadDelay);
             }
         }
@@ -70,7 +70,7 @@ public class CollisionHandler: MonoBehaviour
     
         if (health.GetHealth() <= 0)
         {
-            GetComponent<Player>().enabled = false;
+            GetComponent<PlayerController>().enabled = false;
             Invoke(nameof(ReloadLevel), levelLoadDelay);
         }
     }
@@ -95,14 +95,14 @@ public class CollisionHandler: MonoBehaviour
     void StartSuccessSequence()
     {
         audioSource.PlayOneShot(successSound);
-        GetComponent<Player>().enabled = false;
+        GetComponent<PlayerController>().enabled = false;
         Invoke(nameof(LoadNextLevel), levelLoadDelay);
     }
 
     void StartCrashSequence()
     {
         audioSource.PlayOneShot(crashSound);
-        GetComponent<Player>().enabled = false;
+        GetComponent<PlayerController>().enabled = false;
         Invoke(nameof(ReloadLevel), levelLoadDelay);
     }
 }
