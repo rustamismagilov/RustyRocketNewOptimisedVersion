@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class RocketPickup : MonoBehaviour
 {
-    public Transform holdPoint;
+    [SerializeField] Transform holdPoint;
+
     private GameObject heldObject;
 
     void Update()

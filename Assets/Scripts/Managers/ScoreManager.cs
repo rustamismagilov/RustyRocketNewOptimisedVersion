@@ -4,11 +4,11 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI scoreText;
+
     public static ScoreManager Instance;
 
     private int score = 0;
-
-    [SerializeField] private TextMeshProUGUI scoreText;
 
     void Awake()
     {

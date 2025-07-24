@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EasterEggCollector : MonoBehaviour
 {
-    public int specialPoints = 50;
+    [SerializeField] int specialPoints = 50;
 
     private void OnTriggerEnter(Collider other)
     {

@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class Shooter: MonoBehaviour
+public class Shooter : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform firePoint;
-    public float shootInterval = 1f; 
-    public float shootTimer;
+    [SerializeField] float shootInterval = 1f;
+    [SerializeField] float shootTimer;
 
-    public int damage = 10;
-    public int alienDamage = 5;
+    [SerializeField] int damage = 10;
+    [SerializeField] int alienDamage = 5;
 
-    public bool isAlien = false;
-    
+    [SerializeField] bool isAlien = false;
 
     void Update()
     {

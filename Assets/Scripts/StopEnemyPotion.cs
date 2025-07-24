@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class StopEnemyPotion : MonoBehaviour
 {
-    public float stopDuration = 5f;
-    public float stopRadius = 10f;
+    [SerializeField] float stopDuration = 5f;
+    [SerializeField] float stopRadius = 10f;
 
-    public Transform player;
+    [SerializeField] Transform player;
 
     public void UsePotion()
     {
