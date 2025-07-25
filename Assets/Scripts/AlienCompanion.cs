@@ -26,6 +26,18 @@ public class AlienCompanion : MonoBehaviour
     [Tooltip("Speed at which the alien companion rotates to face the opposite direction.")]
     [SerializeField] float flipSpeed = 180f;
 
+    [SerializeField] Transform combatOffsetPoint;
+    [SerializeField] SphereCollider detectionTrigger;
+    Shooter shooter;
+
+    [SerializeField] float targetRotationSpeed = 5f;
+
+    bool combatMode = false;
+    Transform currentTarget;
+    float shootCooldown = 0f;
+    float currentShootIntervalMultiplier = 1f;
+    float currentDamageMultiplier = 1f;
+
     Transform player;
     float angle;
     Quaternion targetRotation;
@@ -34,6 +46,8 @@ public class AlienCompanion : MonoBehaviour
 
     void Start()
     {
+        shooter = FindFirstObjectByType<PlayerController>().GetComponent<Shooter>();
+
         var playerController = FindFirstObjectByType<PlayerController>();
         if (playerController == null)
         {
@@ -45,32 +59,41 @@ public class AlienCompanion : MonoBehaviour
         player = playerController.transform;
         targetRotation = transform.rotation;
         noiseTimeOffset = Random.Range(0f, 100f);
+
+        if (combatOffsetPoint == null)
+            Debug.LogWarning("Combat offset point not assigned to AlienCompanion.");
+
+        if (detectionTrigger == null)
+            Debug.LogWarning("Detection trigger not assigned to AlienCompanion.");
     }
 
     void Update()
     {
         if (player == null) return;
 
+        if (combatMode && currentTarget != null)
+            HandleCombat();
+        else
+            HandleOrbit();
+    }
+
+    void HandleOrbit()
+    {
         // Determine orbit direction
         float direction = rotateClockwise ? 1f : -1f;
 
-        // Update orbit angle
         angle += orbitSpeed * Time.deltaTime * direction;
         float rad = angle * Mathf.Deg2Rad;
 
-        // Compute orbit position
         float x = Mathf.Cos(rad) * orbitRadius;
         float z = Mathf.Sin(rad) * orbitRadius;
 
-        // Apply noise on Y offset
         float noiseInput = Time.time * yNoiseSpeed + noiseTimeOffset;
         float perlin = Mathf.PerlinNoise(noiseInput, 0f);
         float y = (perlin - 0.5f) * 2f * yAmplitude;
 
-        // Apply position
         transform.position = player.position + new Vector3(x, y, z);
 
-        // Handle flip
         if (!isFlipping && Random.value < flipChance)
         {
             isFlipping = true;
@@ -83,6 +106,43 @@ public class AlienCompanion : MonoBehaviour
             if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
             {
                 isFlipping = false;
+            }
+        }
+    }
+
+    public void SetCombatTarget(Transform target)
+    {
+        combatMode = target != null;
+        currentTarget = target;
+    }
+
+    public void SetCombatConfig(Transform target, float shootSpeedMultiplier, float damageMultiplier)
+    {
+        combatMode = target != null;
+        currentTarget = target;
+
+        currentShootIntervalMultiplier = shootSpeedMultiplier;
+        currentDamageMultiplier = damageMultiplier;
+    }
+
+
+    void HandleCombat()
+    {
+        if (combatOffsetPoint != null)
+            transform.position = combatOffsetPoint.position;
+
+        if (currentTarget != null)
+        {
+            Vector3 dir = currentTarget.position - transform.position;
+            Quaternion lookRot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, targetRotationSpeed * Time.deltaTime);
+
+            shootCooldown -= Time.deltaTime;
+            if (shootCooldown <= 0f)
+            {
+                int finalDamage = Mathf.RoundToInt(shooter.GetDamage() * currentDamageMultiplier);
+                shooter.Shoot(finalDamage);
+                shootCooldown = shooter.GetShootInterval() / currentShootIntervalMultiplier;
             }
         }
     }

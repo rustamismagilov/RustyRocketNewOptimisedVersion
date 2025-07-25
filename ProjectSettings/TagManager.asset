@@ -8,8 +8,6 @@ TagManager:
   - Portal
   - Start
   - Enemy
-  - Undefined
-  - SpawnPoint1
   layers:
   - Default
   - TransparentFX

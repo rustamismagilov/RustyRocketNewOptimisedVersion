@@ -12,6 +12,19 @@ public class Shooter : MonoBehaviour
 
     [SerializeField] bool isAlien = false;
 
+    bool manualShootingEnabled = true;
+
+    public void SetManualShootingEnabled(bool enabled)
+    {
+        manualShootingEnabled = enabled;
+    }
+
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+
     void Update()
     {
         shootTimer -= Time.deltaTime;
@@ -23,14 +36,10 @@ public class Shooter : MonoBehaviour
                 Shoot(alienDamage);
                 shootTimer = shootInterval;
             }
-            else
+            else if (manualShootingEnabled && Input.GetMouseButton(0))
             {
-                if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.V))
-                {
-                    Debug.Log("Shooting triggered");
-                    Shoot(damage);
-                    shootTimer = shootInterval;
-                }
+                Shoot(damage);
+                shootTimer = shootInterval;
             }
         }
     }
@@ -43,6 +52,7 @@ public class Shooter : MonoBehaviour
         else
             Shoot(damage);
     }
+
     public void Shoot(int damageToDeal)
     {
         if (bulletPrefab != null && firePoint != null)
