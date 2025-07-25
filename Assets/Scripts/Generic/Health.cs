@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
     void Die()
     {
         Debug.Log("crashed!");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public int GetHealth()
