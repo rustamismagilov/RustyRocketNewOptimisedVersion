@@ -8,6 +8,8 @@ TagManager:
   - Portal
   - Start
   - Enemy
+  - DangerZone
+  - SafeZone
   layers:
   - Default
   - TransparentFX
