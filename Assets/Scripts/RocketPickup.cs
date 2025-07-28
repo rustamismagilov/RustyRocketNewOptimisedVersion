@@ -2,53 +2,27 @@ using UnityEngine;
 
 public class RocketPickup : MonoBehaviour
 {
-    [SerializeField] Transform holdPoint;
+    public Transform holdPoint;
+    private bool isHeld = false;
 
-    private GameObject heldObject;
-
-    void Update()
+    void OnMouseDown()
     {
-        if (Input.GetKeyDown(KeyCode.E) && heldObject == null)
-            TryPickup();
-
-        if (Input.GetKeyDown(KeyCode.Q) && heldObject != null)
-            Drop();
-    }
-
-    void TryPickup()
-    {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 3f))
+        if (!isHeld)
         {
-            var target = hit.collider.gameObject;
-            if (!target.CompareTag("Pickup")) return;
-
-            var potion = target.GetComponent<StopEnemyPotion>();
-            if (potion != null)
-            {
-                potion.UsePotion();
-                Destroy(target);
-                return;
-            }
-
-            heldObject = target;
-            heldObject.transform.SetParent(holdPoint);
-            heldObject.transform.localPosition = Vector3.zero;
-
-            var rb = heldObject.GetComponent<Rigidbody>();
+            // Pick up
+            transform.SetParent(holdPoint);
+            transform.localPosition = Vector3.zero;
+            Rigidbody rb = GetComponent<Rigidbody>();
             if (rb) rb.isKinematic = true;
+            isHeld = true;
         }
-    }
-
-    void Drop()
-    {
-        var rb = heldObject.GetComponent<Rigidbody>();
-        if (rb)
+        else
         {
-            rb.isKinematic = false;
-            rb.AddForce(transform.forward * 2f, ForceMode.Impulse);
+            // Drop
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb) rb.isKinematic = false;
+            transform.SetParent(null);
+            isHeld = false;
         }
-
-        heldObject.transform.SetParent(null);
-        heldObject = null;
     }
 }
