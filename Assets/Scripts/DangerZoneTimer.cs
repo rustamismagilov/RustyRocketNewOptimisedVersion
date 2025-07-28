@@ -43,7 +43,7 @@ public class DangerZoneTimer: MonoBehaviour
     IEnumerator DangerCountdown()
     { 
         int seconds = 5;
-        while (seconds > 0); 
+        while (seconds > 0)
         { 
             Debug.Log( seconds + " seconds left.");
             yield return new WaitForSeconds(1f);
