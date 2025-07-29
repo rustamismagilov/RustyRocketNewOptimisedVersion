@@ -6,6 +6,7 @@ public class PickupTest : MonoBehaviour
     [SerializeField] public Transform pickupsParent;
     [SerializeField] private List<GameObject> pickups = new(5); // List to keep children      
     [SerializeField] public float pickupRange = 3f;
+    [SerializeField] private Transform holdPoint;
     
     private GameObject heldPickup = null;
 
@@ -37,7 +38,9 @@ public class PickupTest : MonoBehaviour
             if (pickup.activeInHierarchy && Vector3.Distance(transform.position, pickup.transform.position) <= pickupRange)
             {
                 heldPickup = pickup;
-                heldPickup.SetActive(false);
+                heldPickup.transform.position = holdPoint.transform.position;
+                heldPickup.transform.rotation = holdPoint.transform.rotation;
+                heldPickup.SetActive(true);
                 break;
             }
         }
@@ -49,4 +52,15 @@ public class PickupTest : MonoBehaviour
         heldPickup.SetActive(true);
         heldPickup = null;
     }
+    
+    public GameObject GetHeldPickup()
+    {
+        return heldPickup;
+    }
+
+    public void RemoveHeldPickup()
+    {
+        heldPickup = null;
+    }
+
 }

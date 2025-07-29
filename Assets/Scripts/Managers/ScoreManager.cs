@@ -1,48 +1,48 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI eggsCollectedText;
+    [SerializeField] private TextMeshProUGUI enemiesKilledText;
 
-    public static ScoreManager Instance;
+    //Eggs
+    private int eggsCollected = 0;
+    private int totalEggs = 10;
+    
+    //Enemies
+    private int enemiesKilled = 0;
+    private int totalEnemies = 100;
 
-    private int score = 0;
-
-    void Awake()
+    public void AddEgg()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        eggsCollected++;
+        if (eggsCollected > totalEggs) eggsCollected = totalEggs;
+        UpdateEggsText();
+    }
+
+    public void AddEnemyKill()
+    {
+        enemiesKilled++;
+        if (enemiesKilled > totalEnemies) enemiesKilled = totalEnemies;
+        UpdateEnemiesText();
+    }
+
+    private void UpdateEggsText()
+    {
+        if (eggsCollectedText != null)
+            eggsCollectedText.text = $"{eggsCollected}/{totalEggs}";
+    }
+
+    private void UpdateEnemiesText()
+    {
+        if (enemiesKilledText != null)
+            enemiesKilledText.text = $"{enemiesKilled}/{totalEnemies}";
     }
 
     void Start()
     {
-        UpdateScoreText();
-    }
-
-    public void AddPoints(int points)
-    {
-        score += points;
-        UpdateScoreText();
-    }
-
-    public int GetScore()
-    {
-        return score;
-    }
-
-    private void UpdateScoreText()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score;
-        }
+        UpdateEggsText();
+        UpdateEnemiesText();
     }
 }

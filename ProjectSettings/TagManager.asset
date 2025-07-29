@@ -13,6 +13,7 @@ TagManager:
   - PortalPlanet1
   - BlackHole
   - Pickup
+  - Burger
   layers:
   - Default
   - TransparentFX

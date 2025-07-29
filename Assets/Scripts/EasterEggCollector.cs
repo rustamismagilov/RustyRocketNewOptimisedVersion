@@ -2,13 +2,23 @@ using UnityEngine;
 
 public class EasterEggCollector : MonoBehaviour
 {
-    [SerializeField] int specialPoints = 50;
+    private ScoreManager scoreManager;
+
+    void Start()
+    {
+        FindFirstObjectByType<ScoreManager>()?.AddEgg();
+
+        if (scoreManager == null)
+        {
+            Debug.LogError("ScoreManager not found in scene!");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EasterEgg"))
+        if (other.CompareTag("EasterEgg") && scoreManager != null)
         {
-            ScoreManager.Instance.AddPoints(specialPoints);
+            scoreManager.AddEgg();
         }
     }
 }
