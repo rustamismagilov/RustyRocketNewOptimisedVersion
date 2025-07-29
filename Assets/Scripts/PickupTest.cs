@@ -8,6 +8,8 @@ public class PickupTest : MonoBehaviour
     [SerializeField] public float pickupRange = 3f;
     [SerializeField] private Transform holdPoint;
     
+    [SerializeField] private ItemSwitcher itemSwitcher;
+    
     private GameObject heldPickup = null;
     public ItemsCollectedCount itemsCollectedCount;
 
@@ -42,6 +44,11 @@ public class PickupTest : MonoBehaviour
                 heldPickup.transform.position = holdPoint.transform.position;
                 heldPickup.transform.rotation = holdPoint.transform.rotation;
                 heldPickup.SetActive(true);
+                
+                if(itemSwitcher != null)
+                {
+                    itemSwitcher.AddItem(heldPickup);
+                }
                 
                 if (pickup.CompareTag("Burger"))
                 {
