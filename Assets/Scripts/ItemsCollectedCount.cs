@@ -11,6 +11,14 @@ public class ItemsCollectedCount: MonoBehaviour
     private int burgersCount = 0;
     private int explosivesCount = 0;
     private int trashCount = 0;
+    
+    void Start()
+    {
+        UpdateBurgersText();
+        UpdateExplosivesText();
+        UpdateTrashText();
+    }
+
 
     public void AddBurger()
     {

@@ -96,4 +96,24 @@ public class ItemSwitcher : MonoBehaviour
             currentItem = 2;
         }
     }
+    
+    public GameObject GetCurrentItem()
+    {
+        if (collectedItems.Count == 0) return null;
+        return collectedItems[currentItem];
+    }
+
+    public void RemoveItem(GameObject item)
+    {
+        if (collectedItems.Contains(item))
+        {
+            collectedItems.Remove(item);
+            if (currentItem >= collectedItems.Count)
+            {
+                currentItem = Mathf.Max(0, collectedItems.Count - 1);
+            }
+            SetItemActive();
+        }
+    }
+
 }

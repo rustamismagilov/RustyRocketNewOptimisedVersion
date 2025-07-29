@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86bfdefc-4fa9-496b-8bfd-696d7fcd1c30" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/comial-4448-font/Comial4448-8qRA SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/comial-4448-font/Comial4448-8qRA SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Terrain/New Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain/New Terrain.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Generic/Health.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Generic/Health.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ItemSwitcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ItemSwitcher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ItemsCollectedCount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ItemsCollectedCount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PickupTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PickupTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +113,7 @@
       <workItem from="1753354385841" duration="1330000" />
       <workItem from="1753378339325" duration="1254000" />
       <workItem from="1753694733879" duration="10910000" />
+      <workItem from="1753785560102" duration="19774000" />
     </task>
     <servers />
   </component>
