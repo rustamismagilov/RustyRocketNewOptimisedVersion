@@ -9,6 +9,7 @@ public class PickupTest : MonoBehaviour
     [SerializeField] private Transform holdPoint;
     
     private GameObject heldPickup = null;
+    public ItemsCollectedCount itemsCollectedCount;
 
     void Start()
     {
@@ -41,9 +42,23 @@ public class PickupTest : MonoBehaviour
                 heldPickup.transform.position = holdPoint.transform.position;
                 heldPickup.transform.rotation = holdPoint.transform.rotation;
                 heldPickup.SetActive(true);
+                
+                if (pickup.CompareTag("Burger"))
+                {
+                    itemsCollectedCount.AddBurger();
+                }
+                else if (pickup.CompareTag("Explosive"))
+                {
+                    itemsCollectedCount.AddExplosive();
+                }
+                else if (pickup.CompareTag("Trash"))
+                {
+                    itemsCollectedCount.AddTrash();
+                }
                 break;
             }
         }
+
     }
 
     void Drop()

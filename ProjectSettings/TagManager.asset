@@ -12,8 +12,9 @@ TagManager:
   - SafeZone
   - PortalPlanet1
   - BlackHole
-  - Pickup
   - Burger
+  - Explosive
+  - Trash
   layers:
   - Default
   - TransparentFX
