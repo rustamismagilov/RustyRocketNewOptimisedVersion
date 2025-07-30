@@ -1,43 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] float hitPoints = 100f;
-    [SerializeField] GameObject bloodEffect;
+    [SerializeField] float maxHealth = 10f;
 
-    bool isDead = false;
+    //[SerializeField] Animator animator;
 
-    public void TakeDamage(float damage)
+    private float currentHealth;
+    private bool isDead = false;
+
+    private ScoreManager scoreManager;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        scoreManager = FindFirstObjectByType<ScoreManager>();
+    }
+
+    public void TakeDamage(float amount)
     {
         if (isDead) return;
 
-        BroadcastMessage("OnDamageTaken");
+        currentHealth -= amount;
 
-        hitPoints -= damage;
-
-        if (bloodEffect != null)
-        {
-            Instantiate(bloodEffect, transform.position + Vector3.up * 1.2f, Quaternion.identity);
-        }
-
-        if (hitPoints <= 0)
+        if (currentHealth <= 0f)
         {
             Die();
         }
     }
 
-    public bool IsDead()
-    {
-        return isDead;
-    }
-
     void Die()
     {
         if (isDead) return;
-
         isDead = true;
-        GetComponent<Animator>().SetTrigger("Die");
+
+        //if (animator != null)
+         //animator.SetTrigger("Die");
+
+        if (scoreManager != null)
+            scoreManager.AddEnemyKill();
+        
+        Destroy(gameObject, 1.5f);
     }
 }
