@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemSwitcher : MonoBehaviour
 {
     [SerializeField] int currentItem = 0;
-    
+
     private List<GameObject> collectedItems = new List<GameObject>();
 
 
@@ -17,7 +17,7 @@ public class ItemSwitcher : MonoBehaviour
     void Update()
     {
         if (collectedItems.Count == 0) return;
-        
+
         int previousItem = currentItem;
 
         ProcessKeyInput();
@@ -43,6 +43,7 @@ public class ItemSwitcher : MonoBehaviour
             }
         }
     }
+
     void SetItemActive()
     {
         int itemIndex = 0;
@@ -96,7 +97,7 @@ public class ItemSwitcher : MonoBehaviour
             currentItem = 2;
         }
     }
-    
+
     public GameObject GetCurrentItem()
     {
         if (collectedItems.Count == 0) return null;
@@ -115,5 +116,4 @@ public class ItemSwitcher : MonoBehaviour
             SetItemActive();
         }
     }
-
 }

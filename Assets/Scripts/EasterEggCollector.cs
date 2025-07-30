@@ -6,7 +6,9 @@ public class EasterEggCollector : MonoBehaviour
 
     void Start()
     {
-        FindFirstObjectByType<ScoreManager>()?.AddEgg();
+        scoreManager = FindFirstObjectByType<ScoreManager>();
+
+        scoreManager.AddEgg();
 
         if (scoreManager == null)
         {
