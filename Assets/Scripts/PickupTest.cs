@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class PickupTest : MonoBehaviour
 {
     [SerializeField] public Transform pickupsParent;
-    [SerializeField] private List<GameObject> pickups;      
+    //TODO: rework list
+    [SerializeField] private List<GameObject> pickups;
     [SerializeField] public float pickupRange = 3f;
     [SerializeField] private Transform holdPoint;
 
@@ -40,7 +41,7 @@ public class PickupTest : MonoBehaviour
         }
 
         // switch through tags
-        
+
         if (Input.GetKeyDown(KeyCode.Alpha1) && burgerItem != null)
         {
             ShowItem(burgerItem);
@@ -61,23 +62,18 @@ public class PickupTest : MonoBehaviour
 
     void PickUp()
     {
+        //TODO: rework this part
+
         foreach (GameObject pickup in pickups)
         {
-            if (pickup.activeInHierarchy && Vector3.Distance(transform.position, pickup.transform.position) <= pickupRange)
+            if (Vector3.Distance(transform.position, pickup.transform.position) <= pickupRange)
             {
                 heldPickup = pickup;
-
-                // Parent and reset position
-                heldPickup.transform.SetParent(holdPoint);
-                heldPickup.transform.localPosition = Vector3.zero;
-                heldPickup.transform.localRotation = Quaternion.identity;
 
                 // Disable physics
                 var rb = heldPickup.GetComponent<Rigidbody>();
                 if (rb) rb.isKinematic = true;
-                
-                var col = heldPickup.GetComponent<Collider>();
-                if (col) col.enabled = false;
+
 
                 if (itemSwitcher != null)
                 {
@@ -92,7 +88,7 @@ public class PickupTest : MonoBehaviour
                 else if (pickup.CompareTag("Trash"))
                     itemsCollectedCount.AddTrash();
 
-                break; 
+                break;
             }
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemSwitcher : MonoBehaviour
 {
+    //TODO: take a look at this script
+
     [SerializeField] int currentItem = 0;
 
     private List<GameObject> collectedItems = new List<GameObject>();
