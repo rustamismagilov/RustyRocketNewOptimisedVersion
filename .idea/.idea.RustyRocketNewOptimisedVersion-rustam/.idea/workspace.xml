@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="86bfdefc-4fa9-496b-8bfd-696d7fcd1c30" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Cage/Cage.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Cage/Cage.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/rust_key.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/rust_key.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +18,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CinemachineSwitch/CameraSwitcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DangerZoneTimer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/KeyPickup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PickupTest.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -111,7 +106,7 @@
       <workItem from="1753378339325" duration="1254000" />
       <workItem from="1753694733879" duration="10910000" />
       <workItem from="1753785560102" duration="19774000" />
-      <workItem from="1753900422635" duration="2044000" />
+      <workItem from="1753900422635" duration="3486000" />
     </task>
     <servers />
   </component>
