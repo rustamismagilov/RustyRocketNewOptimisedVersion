@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="86bfdefc-4fa9-496b-8bfd-696d7fcd1c30" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/KeyHintSound.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/KeyHintSound.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/KeyPickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/KeyPickup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +109,7 @@
       <workItem from="1753378339325" duration="1254000" />
       <workItem from="1753694733879" duration="10910000" />
       <workItem from="1753785560102" duration="19774000" />
-      <workItem from="1753900422635" duration="3486000" />
+      <workItem from="1753900422635" duration="4379000" />
     </task>
     <servers />
   </component>
