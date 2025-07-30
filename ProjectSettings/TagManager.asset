@@ -15,6 +15,7 @@ TagManager:
   - Burger
   - Explosive
   - Trash
+  - Key
   layers:
   - Default
   - TransparentFX
