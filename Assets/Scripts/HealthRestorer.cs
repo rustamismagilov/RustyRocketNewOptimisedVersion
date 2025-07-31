@@ -2,35 +2,58 @@ using UnityEngine;
 
 public class HealthRestorer : MonoBehaviour
 {
-    private PickupTest pickupTest;
-    private Health playerHealth;
+    [SerializeField] private float holdTimeToEat = 1.5f;
+    [SerializeField] private int healthToRestore = 20;
+    [SerializeField] private int fuelToRestore = 10;
 
-    private void Start()
-    {
-        pickupTest = GetComponent<PickupTest>();
-        playerHealth = GetComponent<Health>();
-    }
+    private float eatTimer = 0f;
+    private bool isEating = false;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
         {
-            GameObject heldHealthRestoringObject = pickupTest.GetHeldPickup();
+            return;
+        }
 
-            if (heldHealthRestoringObject != null && heldHealthRestoringObject.CompareTag("Burger"))
+        Pickup pickup = player.GetComponent<Pickup>();
+        Health playerHealth = player.GetComponent<Health>();
+
+        if (pickup == null || playerHealth == null)
+        {
+            return;
+        }
+
+        if (pickup.GetHeldPickup() == gameObject)
+        {
+            if (Input.GetKey(KeyCode.E))
             {
-                playerHealth.RestoreHealth(20);
-                playerHealth.AddFuel(10);
+                eatTimer += Time.deltaTime;
 
-                Destroy(heldHealthRestoringObject);
-                pickupTest.RemoveHeldPickup();
+                if (eatTimer >= holdTimeToEat && !isEating)
+                {
+                    isEating = true;
+                    playerHealth.RestoreHealth(healthToRestore);
+                    playerHealth.AddFuel(fuelToRestore);
 
-                Debug.Log($"{name} eaten!");
+                    pickup.RemoveHeldPickup();
+                    Destroy(gameObject);
+
+                    Debug.Log($"{gameObject.name} consumed!");
+                }
             }
             else
             {
-                Debug.Log("Not edible");
+                eatTimer = 0f;
+                isEating = false;
             }
+        }
+        else
+        {
+            eatTimer = 0f;
+            isEating = false;
         }
     }
 }

@@ -12,10 +12,10 @@ TagManager:
   - SafeZone
   - PortalPlanet1
   - BlackHole
-  - Burger
   - Explosive
   - Trash
   - Key
+  - Consumable
   layers:
   - Default
   - TransparentFX
