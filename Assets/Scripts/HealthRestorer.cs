@@ -12,21 +12,17 @@ public class HealthRestorer : MonoBehaviour
     private void Update()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
 
-        if (player == null)
-        {
-            return;
-        }
-
-        Pickup pickup = player.GetComponent<Pickup>();
+        CategoryItemSwitcher categorySwitcher = player.GetComponentInChildren<CategoryItemSwitcher>();
         Health playerHealth = player.GetComponent<Health>();
 
-        if (pickup == null || playerHealth == null)
-        {
-            return;
-        }
+        if (categorySwitcher == null || playerHealth == null) return;
 
-        if (pickup.GetHeldPickup() == gameObject)
+        // Check if this item is currently the active/held item
+        GameObject currentItem = categorySwitcher.GetCurrentlyHeldItem();
+
+        if (currentItem == gameObject)
         {
             if (Input.GetKey(KeyCode.E))
             {
@@ -38,9 +34,10 @@ public class HealthRestorer : MonoBehaviour
                     playerHealth.RestoreHealth(healthToRestore);
                     playerHealth.AddFuel(fuelToRestore);
 
-                    pickup.RemoveHeldPickup();
-                    Destroy(gameObject);
+                    // Remove this item from the category system
+                    categorySwitcher.RemoveItem(gameObject);
 
+                    Destroy(gameObject);
                     Debug.Log($"{gameObject.name} consumed!");
                 }
             }

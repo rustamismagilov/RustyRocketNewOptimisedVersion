@@ -16,6 +16,9 @@ TagManager:
   - Trash
   - Key
   - Consumable
+  - Category1
+  - Category2
+  - Category3
   layers:
   - Default
   - TransparentFX

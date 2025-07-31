@@ -14,10 +14,13 @@ public class TeleportingInScene : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Reset speed of the player after TP
-        player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        playerAnimator.SetTrigger("fade");
-        Invoke(nameof(Teleport), 0.5f);
+        if (other.CompareTag("Player"))
+        {
+            // Reset speed of the player after TP
+            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            playerAnimator.SetTrigger("fade");
+            Invoke(nameof(Teleport), 0.5f);
+        }
     }
 
     void Teleport()
