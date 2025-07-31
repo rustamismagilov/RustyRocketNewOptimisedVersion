@@ -16,6 +16,7 @@ public class HealthRestorer : MonoBehaviour
 
         CategoryItemSwitcher categorySwitcher = player.GetComponentInChildren<CategoryItemSwitcher>();
         Health playerHealth = player.GetComponent<Health>();
+        Fuel playerFuel = player.GetComponent<Fuel>();
 
         if (categorySwitcher == null || playerHealth == null) return;
 
@@ -32,7 +33,7 @@ public class HealthRestorer : MonoBehaviour
                 {
                     isEating = true;
                     playerHealth.RestoreHealth(healthToRestore);
-                    playerHealth.AddFuel(fuelToRestore);
+                    playerFuel.AddFuel(fuelToRestore);
 
                     // Remove this item from the category system
                     categorySwitcher.RemoveItem(gameObject);

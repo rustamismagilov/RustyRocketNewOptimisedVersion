@@ -7,6 +7,7 @@ public class HealthAndFuelUI : MonoBehaviour
     [SerializeField] private Slider fuelBar;
 
     private Health playerHealth;
+    private Fuel playerFuel;
 
     private PlayerController playerController;
 
@@ -15,20 +16,21 @@ public class HealthAndFuelUI : MonoBehaviour
         playerController = FindFirstObjectByType<PlayerController>();
 
         playerHealth = playerController.GetComponent<Health>();
+        playerFuel = playerController.GetComponent<Fuel>();
 
         if (playerHealth != null)
-        {
             healthBar.maxValue = playerHealth.GetMaxHealth();
-            fuelBar.maxValue = playerHealth.GetMaxFuel();
-        }
+
+        if (playerFuel != null)
+            fuelBar.maxValue = playerFuel.GetMaxFuel();
     }
 
     void Update()
     {
         if (playerHealth != null)
-        {
             healthBar.value = playerHealth.GetHealth();
-            fuelBar.value = playerHealth.GetFuel();
-        }
+
+        if (playerFuel != null)
+            fuelBar.value = playerFuel.GetFuel();
     }
 }
