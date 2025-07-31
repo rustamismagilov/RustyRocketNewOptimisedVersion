@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthUIFuel : MonoBehaviour
+public class HealthAndFuelUI : MonoBehaviour
 {
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider fuelBar;
@@ -18,8 +18,8 @@ public class HealthUIFuel : MonoBehaviour
 
         if (playerHealth != null)
         {
-            healthBar.maxValue = playerHealth.GetHealth();
-            fuelBar.maxValue = playerHealth.GetFuel();
+            healthBar.maxValue = playerHealth.GetMaxHealth();
+            fuelBar.maxValue = playerHealth.GetMaxFuel();
         }
     }
 

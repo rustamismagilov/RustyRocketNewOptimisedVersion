@@ -18,6 +18,16 @@ public class Health : MonoBehaviour
         return currentFuel;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public int GetMaxFuel()
+    {
+        return maxFuel;
+    }
+
     void Start()
     {
         currentHealth = maxHealth;

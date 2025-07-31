@@ -165,7 +165,7 @@ public class CategoryItemSwitcher : MonoBehaviour
 
             FindFirstObjectByType<ItemsCollectedCount>()?.UpdateAllCounts();
 
-            Debug.Log($"Item {item.name} removed from {category} category");
+            Debug.Log($"{item.name} removed from {category} category");
         }
     }
 
