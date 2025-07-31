@@ -1,12 +1,22 @@
 using UnityEngine;
 
-public class Health: MonoBehaviour
+public class Health : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 100;
-    [SerializeField] int currentHealth;
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth;
 
-    [SerializeField] int maxFuel = 100;
-    [SerializeField] int currentFuel;
+    [SerializeField] private int maxFuel = 100;
+    private int currentFuel;
+
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetFuel()
+    {
+        return currentFuel;
+    }
 
     void Start()
     {
@@ -47,15 +57,5 @@ public class Health: MonoBehaviour
     {
         Debug.Log("crashed!");
         // death animation!!!
-    }
-
-    public int GetHealth()
-    {
-        return currentHealth;
-    }
-
-    public int GetFuel()
-    {
-        return currentFuel;
     }
 }

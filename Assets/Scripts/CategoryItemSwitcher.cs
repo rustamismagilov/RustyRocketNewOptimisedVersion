@@ -129,6 +129,8 @@ public class CategoryItemSwitcher : MonoBehaviour
 
         SwitchCategory(category, categoryTransform);
 
+        FindFirstObjectByType<ItemsCollectedCount>()?.UpdateAllCounts();
+
         Debug.Log($"Item {item.name} added to {category} category");
     }
 
@@ -161,6 +163,8 @@ public class CategoryItemSwitcher : MonoBehaviour
                 UpdateVisibleItems();
             }
 
+            FindFirstObjectByType<ItemsCollectedCount>()?.UpdateAllCounts();
+
             Debug.Log($"Item {item.name} removed from {category} category");
         }
     }
@@ -187,5 +191,12 @@ public class CategoryItemSwitcher : MonoBehaviour
             Pickupable.CategoryType.Category3 => category3,
             _ => null
         };
+    }
+
+    public int GetItemCount(Pickupable.CategoryType category)
+    {
+        if (categorizedItems.ContainsKey(category))
+            return categorizedItems[category].Count;
+        return 0;
     }
 }
