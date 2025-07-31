@@ -6,6 +6,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] float shootInterval = 1f;
     [SerializeField] float shootTimer;
+    [SerializeField] Transform player;
+
 
     [SerializeField] int damage = 10;
     [SerializeField] int alienDamage = 5;
@@ -27,6 +29,12 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
+        if (player != null && firePoint != null)
+        {
+            Vector3 direction = (player.position - firePoint.position).normalized;
+            firePoint.rotation = Quaternion.LookRotation(direction);
+        }
+
         shootTimer -= Time.deltaTime;
 
         if (shootTimer <= 0f)
@@ -43,6 +51,7 @@ public class Shooter : MonoBehaviour
             }
         }
     }
+
 
 
     public void Shoot()

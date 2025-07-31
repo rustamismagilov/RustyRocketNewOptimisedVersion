@@ -16,6 +16,8 @@ TagManager:
   - Explosive
   - Trash
   - Key
+  - TrackingObject
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - 
   - Water
   - UI
+  - Enemy
   - Player
-  - 
   - 
   - 
   - 

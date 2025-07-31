@@ -1,21 +1,37 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class StoryTellingCanvas: MonoBehaviour
+public class StoryTellingCanvas : MonoBehaviour
 {
-    [SerializeField] public GameObject[] storySlides;
-    [SerializeField] public Button nextButton;
-    [SerializeField] public Button backButton;
+    [Header("Slides and Navigation")]
+    [SerializeField] private GameObject[] storySlides;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Button backButton;
+
+    [Header("Canvas References")]
+    [SerializeField] private GameObject storyCanvas;
+
+    [SerializeField] private GameObject startCanvas;
 
     private int currentIndex = 0;
 
+    void Start()
+    {
+        ShowSlide();
+    }
+
     public void OnNextClicked()
     {
-        if (currentIndex < storySlides.Length - 1)
+        currentIndex++;
+        
+        if (currentIndex >= storySlides.Length)
         {
-            currentIndex++;
-            ShowSlide();
+            EndStory();
+            return;
         }
+
+        ShowSlide();
     }
 
     public void OnBackClicked()
@@ -27,9 +43,9 @@ public class StoryTellingCanvas: MonoBehaviour
         }
     }
 
-    void Start()
+    public void OnStartClicked()
     {
-        ShowSlide();
+        SceneManager.LoadScene("Planet1");
     }
 
     void ShowSlide()
@@ -38,8 +54,26 @@ public class StoryTellingCanvas: MonoBehaviour
         {
             storySlides[i].SetActive(i == currentIndex);
         }
+        
+        backButton.gameObject.SetActive(currentIndex > 0);
+        
+        nextButton.gameObject.SetActive(true);
+    }
 
-        backButton.interactable = currentIndex > 0;
-        nextButton.interactable = currentIndex < storySlides.Length - 1;
+    void EndStory()
+    {
+        foreach (var slide in storySlides)
+        {
+            slide.SetActive(false);
+        }
+        
+        nextButton.gameObject.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        
+        if (storyCanvas != null)
+            storyCanvas.SetActive(false);
+        
+        if (startCanvas != null)
+            startCanvas.SetActive(true);
     }
 }
