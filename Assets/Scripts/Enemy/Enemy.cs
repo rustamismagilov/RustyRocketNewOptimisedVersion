@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Ranges")]
     public float chaseRange = 10f;
     public float attackRange = 2f;
-
-    [Header("Movement & Attack")]
     public float moveSpeed = 5f;
     public float attackCooldown = 1.5f;
     public int damage = 1;
     public float knockbackForce = 5f;
 
+    public bool IsGrounded = true;
+    public bool IsDead = false;
+
     private Transform player;
     private Rigidbody playerRb;
-    
-    //private Animator animator;
+    private Animator animator;
     private float lastAttackTime;
 
     void Start()
@@ -27,7 +26,7 @@ public class Enemy : MonoBehaviour
             playerRb = playerObj.GetComponent<Rigidbody>();
         }
 
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -35,39 +34,75 @@ public class Enemy : MonoBehaviour
         if (player == null || playerRb == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-        
         Vector3 direction = (player.position - transform.position).normalized;
+
         if (direction != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(direction);
-        
-        if (distance <= chaseRange && distance > attackRange)
+
+        animator.SetBool("IsGrounded", IsGrounded);
+
+        if (distance <= attackRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            animator.SetBool("IsAttacking", true);
+
+            if (Time.time - lastAttackTime >= attackCooldown)
+            {
+                Attack();
+                lastAttackTime = Time.time;
+            }
         }
-        
-        if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
+        else
         {
-            Attack();
-            lastAttackTime = Time.time;
+            animator.SetBool("IsAttacking", false);
+
+            if (distance <= chaseRange)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+
+                if (IsGrounded)
+                    animator.Play("Walk");
+                else
+                    animator.Play("Flying");
+            }
+            else
+            {
+                if (IsGrounded)
+                    animator.Play("Idle");
+                else
+                    animator.Play("Flying");
+            }
         }
     }
 
     void Attack()
     {
-        //if (animator != null)
-            //animator.SetTrigger("Attack");
+        if (animator != null)
+            animator.SetTrigger("Attack");
 
         Debug.Log("Enemy attacks!");
-        
+
         Vector3 knockbackDir = (player.position - transform.position).normalized;
         playerRb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
-        
+
         Health playerHealth = player.GetComponent<Health>();
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);
         }
-
-        //TODO: Take Damage
+    }
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            IsGrounded = true;
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            IsGrounded = false;
+        }
     }
 }

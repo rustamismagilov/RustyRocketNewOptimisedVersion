@@ -1,69 +1,9 @@
 fileFormatVersion: 2
-guid: de5695b92211644c2936e9490f7925b1
+guid: fde9c0e027f814352b569965f7cd305c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ch50_body
-    second: {fileID: 2100000, guid: c7a2d74b4efcd4586bf158712938fc42, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Ch50_body1
-    second: {fileID: 2100000, guid: d3d8e916a04f44e4f9d2d79bc99a9a57, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1001_Diffuse
-    second: {fileID: 2800000, guid: 0342722c712b1b7449385a0f5bf2df3c, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1001_Emissive
-    second: {fileID: 2800000, guid: da0d8819255c7134fa0ef1eeaafb4760, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1001_Glossiness
-    second: {fileID: 2800000, guid: 71e8693885e061c44bb0dad373d7c2d0, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1001_Normal
-    second: {fileID: 2800000, guid: 29e6cf5edbbc385468a105fcfa86b2c5, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1001_Specular
-    second: {fileID: 2800000, guid: b796100a0178372499e7f4c02535a586, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1002_Diffuse
-    second: {fileID: 2800000, guid: 783ab693f68b72b43b8d30332006814d, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1002_Emissive
-    second: {fileID: 2800000, guid: ea181fd57bb4d0e46a6d803092413a78, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1002_Glossiness
-    second: {fileID: 2800000, guid: 3ba79e83d0ad3f043b53ba6a246c55c0, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1002_Normal
-    second: {fileID: 2800000, guid: b3224bebdb19e23428e2c35451833da1, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch50_1002_Specular
-    second: {fileID: 2800000, guid: f144b0bec3a066f469f16d6cd96da3c5, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

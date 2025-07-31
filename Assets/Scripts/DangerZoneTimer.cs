@@ -2,47 +2,32 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 
-public class DangerZoneTimer: MonoBehaviour
+public class DangerZoneTimer : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] private ParticleSystem explosionEffect;
-    
+
     private Coroutine dangerTime;
     private bool exploded = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && CompareTag("DangerZone"))
+        if (other.CompareTag("Player") && dangerTime == null)
         {
-            if (dangerTime == null)
-            {
-                Debug.Log("5 seconds to return!!!");
-                dangerTime = StartCoroutine(DangerCountdown());
-            }
-        }
-        else if (other.CompareTag("Player") && CompareTag("SafeZone"))
-        {
-            if (dangerTime != null)
-            {
-                Debug.Log("Safe zone entered yay");
-                StopCoroutine(dangerTime);
-                dangerTime = null;
-                ResetTimerUI();
-            }
+            Debug.Log("5 seconds to return!");
+            dangerTime = StartCoroutine(DangerCountdown());
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && CompareTag("DangerZone"))
+        if (other.CompareTag("Player") && dangerTime != null)
         {
-            if (dangerTime != null)
-            {
-                StopCoroutine(dangerTime);
-                dangerTime = null;
-                ResetTimerUI();
-            }
+            Debug.Log("Exited Danger zone");
+            StopCoroutine(dangerTime);
+            dangerTime = null;
+            ResetTimerUI();
         }
     }
 
@@ -53,7 +38,7 @@ public class DangerZoneTimer: MonoBehaviour
 
         while (seconds > 0)
         {
-            Debug.Log(seconds + " seconds left.");
+            Debug.Log($"{seconds} seconds left.");
             if (timerText != null)
                 timerText.text = seconds.ToString();
 
@@ -61,30 +46,41 @@ public class DangerZoneTimer: MonoBehaviour
             seconds--;
         }
 
+        yield return new WaitForSeconds(0.25f);
+
         if (!exploded)
         {
-            exploded = true;
-            if (explosionEffect != null)
-            {
-                Instantiate(explosionEffect, player.transform.position, Quaternion.identity);
-            }
+            ExplosionMethod();
         }
 
         GameObject start = GameObject.FindWithTag("Start");
-
         if (start != null)
         {
             player.transform.position = start.transform.position;
-            ResetTimerUI();
         }
-        
 
-    dangerTime = null;
+        ResetTimerUI();
+        dangerTime = null;
     }
 
-void ResetTimerUI()
-{
-    if (timerText != null)
-        timerText.text = "5";
-}
+    void ExplosionMethod()
+    {
+        if (exploded) return;
+
+        exploded = true;
+
+        if (explosionEffect != null)
+        {
+            Debug.Log("Explosion initiated!");
+            Vector3 spawnPos = player.transform.position;
+            ParticleSystem explosion = Instantiate(explosionEffect, spawnPos, Quaternion.identity);
+            Destroy(explosion.gameObject, explosion.main.duration + explosion.main.startLifetime.constantMax);
+        }
+    }
+
+    void ResetTimerUI()
+    {
+        if (timerText != null)
+            timerText.text = "";
+    }
 }
