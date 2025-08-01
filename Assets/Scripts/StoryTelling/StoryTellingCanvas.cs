@@ -15,13 +15,12 @@ public class StoryTellingCanvas : MonoBehaviour
     [SerializeField] private GameObject playerControlCanvas;
 
     private Animator animator;
-
     private int currentIndex = 0;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-
+        animator  = GetComponent<Animator>();
+        
         if (startCanvas != null) startCanvas.SetActive(false);
         if (playerControlCanvas != null) playerControlCanvas.SetActive(false);
 
@@ -30,7 +29,18 @@ public class StoryTellingCanvas : MonoBehaviour
 
     public void OnNextClicked()
     {
-        animator.SetTrigger("moveSlide1");
+        if (currentIndex == 0)
+            animator.SetTrigger("moveSlide1");
+        else if (currentIndex == 1)
+            animator.SetTrigger("moveSlide2");
+        else if (currentIndex == 2)
+            animator.SetTrigger("moveSlide3");
+        else if (currentIndex == 3)
+            animator.SetTrigger("moveSlide4");
+        else if (currentIndex == 4)
+            animator.SetTrigger("moveSlide5");
+        else if (currentIndex == 5)
+            animator.SetTrigger("moveSlide6");
 
         currentIndex++;
 
@@ -42,6 +52,7 @@ public class StoryTellingCanvas : MonoBehaviour
 
         ShowSlide();
     }
+
 
     public void OnBackClicked()
     {
