@@ -8,9 +8,6 @@ TagManager:
   - Portal
   - Start
   - Enemy
-  - DangerZone
-  - SafeZone
-  - PortalPlanet1
   - BlackHole
   - Burger
   - Explosive
@@ -18,6 +15,7 @@ TagManager:
   - Key
   - TrackingObject
   - Ground
+  - Consumable
   layers:
   - Default
   - TransparentFX

@@ -1,62 +1,102 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
-public class DangerZoneTimer: MonoBehaviour
+public class DangerZoneTimer : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI warningText;
+    [SerializeField] ParticleSystem explosionEffect;
+    [SerializeField] AudioClip countdownBeep;
+    [SerializeField] float beepVolume = 0.3f;
+    [SerializeField] Transform respawnPoint;
+    [SerializeField] int secondsToReturn = 5;
+    [SerializeField] private string warningMessage = "Return to safe zone immediately!!!";
+    [SerializeField] private string dangerMessage = "You will be neutralized.";
 
     private Coroutine dangerTime;
+    private bool exploded = false;
+    private PlayerController player;
 
-    void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player") && CompareTag("DangerZone"))
-        {
-            if (dangerTime == null)
-            {
-                Debug.Log("5 seconds to return!!!");
-                dangerTime = StartCoroutine(DangerCountdown());
-            }
-        }
-        else if (other.CompareTag("Player") && CompareTag("SafeZone"))
-        {
-            if (dangerTime != null)
-            {
-                Debug.Log("Safe zone entered yay");
-                StopCoroutine(dangerTime);
-                dangerTime = null;
-            }
-        }
+        player = FindFirstObjectByType<PlayerController>();
+
+        warningText.enabled = false;
+        timerText.enabled = false;
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && CompareTag("DangerZone"))
+        warningText.enabled = true;
+        warningText.text = warningMessage.ToString();
+        timerText.enabled = true;
+
+        if (other.CompareTag("Player") && dangerTime == null)
         {
-            if (dangerTime != null)
-            {
-                StopCoroutine(dangerTime);
-                dangerTime = null;
-            }
+            dangerTime = StartCoroutine(Countdown());
         }
     }
 
-    IEnumerator DangerCountdown()
-    { 
-        int seconds = 5;
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && dangerTime != null)
+        {
+            StopCoroutine(dangerTime);
+            dangerTime = null;
+            exploded = false;
+            ResetTimerUI();
+        }
+    }
+
+    IEnumerator Countdown()
+    {
+        int seconds = secondsToReturn;
+        exploded = false;
+
         while (seconds > 0)
-        { 
-            Debug.Log( seconds + " seconds left.");
+        {
+            if (timerText != null)
+                timerText.text = seconds.ToString();
+
+            if (countdownBeep != null)
+                AudioSource.PlayClipAtPoint(countdownBeep, player.transform.position, beepVolume);
+
             yield return new WaitForSeconds(1f);
             seconds--;
         }
-        
-        GameObject start = GameObject.FindWithTag("Start");
-        
-        if (start != null) 
+
+        if (!exploded)
         {
-            player.transform.position = start.transform.position;
+            ExplosionMethod();
         }
 
+
+        if (respawnPoint != null && player != null)
+        {
+            player.transform.SetPositionAndRotation(respawnPoint.transform.position, Quaternion.identity);
+            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        }
+
+        ResetTimerUI();
         dangerTime = null;
+    }
+
+    void ExplosionMethod()
+    {
+        if (exploded) return;
+        exploded = true;
+
+        if (explosionEffect != null && player != null)
+        {
+            explosionEffect = Instantiate(explosionEffect, player.transform.position, Quaternion.identity);
+            Destroy(explosionEffect.gameObject, explosionEffect.main.duration + explosionEffect.main.startLifetime.constantMax);
+        }
+    }
+    void ResetTimerUI()
+    {
+        if (timerText != null)
+            timerText.text = "";
     }
 }
