@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Planet1.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/GameFinished.unity
+    guid: f3c10daead18f4b9e97c991dc291ce96
   - enabled: 0
     path: Assets/Scenes/StorageRoom.unity
     guid: 56fc5d72869b04f1bbffcae2f5192c95
