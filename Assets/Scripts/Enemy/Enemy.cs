@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private CapsuleCollider capsule;
-
     [Header("Chase & Attack Settings")]
     public float chaseRange = 10f;
     public float attackRange = 2f;
@@ -34,12 +32,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        capsule = GetComponent<CapsuleCollider>();
-        if (capsule == null)
-        {
-            Debug.LogWarning("CapsuleCollider not found on enemy!");
-        }
-
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -56,24 +48,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (capsule != null)
-        {
-            if (IsGrounded)
-            {
-                capsule.height = 3f;
-                capsule.radius = 0.8f;
-                capsule.center = new Vector3(0f, 1.5f, 0f);
-                capsule.direction = 1;
-            }
-            else
-            {
-                capsule.height = 3f;
-                capsule.radius = 1.5f;
-                capsule.center = new Vector3(0f, 0.75f, 0f);
-                capsule.direction = 0; 
-            }
-        }
-
         if (player == null || playerRb == null) return;
         if (IsDead) return;
 
