@@ -6,14 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="86bfdefc-4fa9-496b-8bfd-696d7fcd1c30" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameFinished.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameFinished.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/oldtimer/Oldtimer SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/oldtimer/Oldtimer SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AlienCompanion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AlienCompanion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BlackHole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BlackHole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DamagePerItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DamagePerItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DangerZoneTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DangerZoneTimer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/foptitles SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/foptitles SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/ozda-font/Ozda-0vOKX SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/ozda-font/Ozda-0vOKX SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
