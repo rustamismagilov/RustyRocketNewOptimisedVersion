@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class Health: MonoBehaviour
+public class Health : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 100;
-    [SerializeField] int currentHealth;
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth;
 
-    [SerializeField] int maxFuel = 100;
-    [SerializeField] int currentFuel;
+    public int GetHealth() => currentHealth;
+    public int GetMaxHealth() => maxHealth;
 
     void Start()
     {
         currentHealth = maxHealth;
-        currentFuel = maxFuel;
     }
 
     public void TakeDamage(int amount)
@@ -20,18 +19,7 @@ public class Health: MonoBehaviour
         Debug.Log("Health: " + currentHealth);
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
-    }
-
-    public void AddFuel(int amount)
-    {
-        currentFuel += amount;
-        if (currentFuel > maxFuel)
-            currentFuel = maxFuel;
-
-        Debug.Log("Fuel: " + currentFuel);
     }
 
     public void RestoreHealth(int amount)
@@ -43,19 +31,9 @@ public class Health: MonoBehaviour
         Debug.Log("Health: " + currentHealth);
     }
 
-    void Die()
+    private void Die()
     {
         Debug.Log("crashed!");
         // death animation!!!
-    }
-
-    public int GetHealth()
-    {
-        return currentHealth;
-    }
-
-    public int GetFuel()
-    {
-        return currentFuel;
     }
 }

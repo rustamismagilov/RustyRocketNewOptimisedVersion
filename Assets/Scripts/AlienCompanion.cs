@@ -3,26 +3,34 @@ using UnityEngine;
 public class AlienCompanion : MonoBehaviour
 {
     [Header("Orbit Settings")]
+    [Tooltip("Speed at which the companion orbits around the player (degrees per second).")]
     [SerializeField] float orbitSpeed = 20f;
+
+    [Tooltip("Distance from the player during orbiting.")]
     [SerializeField] float orbitRadius = 2f;
+
+    [Tooltip("Maximum vertical offset caused by noise.")]
     [SerializeField] float yAmplitude = 1f;
+
+    [Tooltip("How quickly the vertical wobble changes over time.")]
     [SerializeField] float yNoiseSpeed = 0.2f;
+
+    [Tooltip("Rotate clockwise if true, counter-clockwise if false.")]
     [SerializeField] bool rotateClockwise = true;
 
+
     [Header("Flip Settings")]
+    [Tooltip("Chance per frame to trigger a head flip (can take values in range of 0–1).")]
     [SerializeField] float flipChance = 0.002f;
+
+    [Tooltip("Speed at which the alien companion rotates to face the opposite direction.")]
     [SerializeField] float flipSpeed = 180f;
 
-    [Header("Combat Settings")]
     [SerializeField] Transform combatOffsetPoint;
     [SerializeField] SphereCollider detectionTrigger;
-    [SerializeField] float targetRotationSpeed = 5f;
-
-    [Header("Audio Settings")]
-    [SerializeField] AudioClip detectionSound;
-    [SerializeField] float detectionVolume = 0.4f;
-
     Shooter shooter;
+
+    [SerializeField] float targetRotationSpeed = 5f;
 
     bool combatMode = false;
     Transform currentTarget;
@@ -35,13 +43,12 @@ public class AlienCompanion : MonoBehaviour
     Quaternion targetRotation;
     bool isFlipping = false;
     float noiseTimeOffset;
-    bool soundPlayed = false;
 
     void Start()
     {
         shooter = FindFirstObjectByType<PlayerController>().GetComponent<Shooter>();
-        var playerController = FindFirstObjectByType<PlayerController>();
 
+        var playerController = FindFirstObjectByType<PlayerController>();
         if (playerController == null)
         {
             Debug.LogError("PlayerController not found in the scene.");
@@ -52,6 +59,12 @@ public class AlienCompanion : MonoBehaviour
         player = playerController.transform;
         targetRotation = transform.rotation;
         noiseTimeOffset = Random.Range(0f, 100f);
+
+        if (combatOffsetPoint == null)
+            Debug.LogWarning("Combat offset point not assigned to AlienCompanion.");
+
+        if (detectionTrigger == null)
+            Debug.LogWarning("Detection trigger not assigned to AlienCompanion.");
     }
 
     void Update()
@@ -66,7 +79,9 @@ public class AlienCompanion : MonoBehaviour
 
     void HandleOrbit()
     {
+        // Determine orbit direction
         float direction = rotateClockwise ? 1f : -1f;
+
         angle += orbitSpeed * Time.deltaTime * direction;
         float rad = angle * Mathf.Deg2Rad;
 
@@ -99,27 +114,17 @@ public class AlienCompanion : MonoBehaviour
     {
         combatMode = target != null;
         currentTarget = target;
-
-        if (detectionSound != null && !soundPlayed)
-        {
-            AudioSource.PlayClipAtPoint(detectionSound, transform.position, detectionVolume);
-            soundPlayed = true;
-        }
     }
 
     public void SetCombatConfig(Transform target, float shootSpeedMultiplier, float damageMultiplier)
     {
         combatMode = target != null;
         currentTarget = target;
+
         currentShootIntervalMultiplier = shootSpeedMultiplier;
         currentDamageMultiplier = damageMultiplier;
-
-        if (detectionSound != null && !soundPlayed)
-        {
-            AudioSource.PlayClipAtPoint(detectionSound, transform.position, detectionVolume);
-            soundPlayed = true;
-        }
     }
+
 
     void HandleCombat()
     {

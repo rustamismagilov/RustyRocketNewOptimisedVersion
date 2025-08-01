@@ -11,8 +11,8 @@ public class CameraSwitcher: MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log(other.name + " entered " + gameObject.name);
-                cameraB.gameObject.SetActive(false);
-                cameraA.gameObject.SetActive(true);
+                cameraA.gameObject.SetActive(false);
+                cameraB.gameObject.SetActive(true);
             
         }
     }
@@ -22,8 +22,8 @@ public class CameraSwitcher: MonoBehaviour
         if (other.CompareTag("Player"))
         { 
             Debug.Log(other.name + " exited " + gameObject.name);
-            cameraB.gameObject.SetActive(true);
-            cameraA.gameObject.SetActive(false);
+            cameraA.gameObject.SetActive(true);
+            cameraB.gameObject.SetActive(false);
         }
     }
 

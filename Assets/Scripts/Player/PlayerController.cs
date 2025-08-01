@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour
     [Header("Thrust Settings")]
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotationThrust = 1f;
+    private Fuel fuel;
+    [SerializeField] private float fuelConsumptionRate = 5f; // per second
+    [SerializeField] private float fuelConsumptionBoostedMultiplier = 2f;
 
     [Header("Audio Settings")]
     [SerializeField] AudioClip mainEngineSound;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         audioSource = gameObject.AddComponent<AudioSource>();
+        fuel = GetComponent<Fuel>();
 
         backgroundAudioSource = gameObject.AddComponent<AudioSource>();
         backgroundAudioSource.clip = backgroundMusic;
@@ -47,47 +51,46 @@ public class PlayerController : MonoBehaviour
         float currentThrust = mainThrust;
         bool isThrusting = false;
 
-        float targetDamping = Input.GetKey(KeyCode.LeftAlt)? linearDampingToSlowdown: 0f;
+        // Speed modifiers
+        float targetDamping = Input.GetKey(KeyCode.LeftAlt) ? linearDampingToSlowdown : 0f;
         float dampingChangeRate = linearDampingToSlowdown / linearDampingChangeRate;
         rb.linearDamping = Mathf.MoveTowards(rb.linearDamping, targetDamping, dampingChangeRate * Time.deltaTime);
 
-        // Boost using Left Control
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            currentThrust *= 2f;
-        }
+        bool isBoosting = Input.GetKey(KeyCode.LeftShift);
+        if (isBoosting)
+            currentThrust *= fuelConsumptionBoostedMultiplier;
 
-        // Upward thrust
-        if (Input.GetKey(KeyCode.Space))
+        float currentFuelConsumption = fuelConsumptionRate * (isBoosting ? fuelConsumptionBoostedMultiplier : 1f);
+
+        bool isPressingSpace = Input.GetKey(KeyCode.Space);
+        bool hasFuel = fuel != null && fuel.GetFuel() > 0;
+
+        if (isPressingSpace && hasFuel)
         {
             rb.AddRelativeForce(Vector3.up * (currentThrust * Time.deltaTime));
+            fuel.ConsumeFuel(currentFuelConsumption * Time.deltaTime);
             isThrusting = true;
 
             if (!audioSource.isPlaying)
-            {
                 audioSource.PlayOneShot(mainEngineSound);
-            }
-        }
 
-        // Forward thrust
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            rb.AddRelativeForce(Vector3.forward * (currentThrust * Time.deltaTime));
-            isThrusting = true;
-        }
-
-        // Particles and sound
-        if (isThrusting)
-        {
             if (!mainEngineParticles.isPlaying)
-            {
                 mainEngineParticles.Play();
-            }
         }
         else
         {
-            audioSource.Stop();
-            mainEngineParticles.Stop();
+            if (mainEngineParticles.isPlaying)
+                mainEngineParticles.Stop();
+
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+        }
+
+        // Forward thrust (does not consume fuel but still applies force)
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rb.AddRelativeForce(Vector3.forward * (currentThrust * Time.deltaTime));
+            isThrusting = true;
         }
     }
 
@@ -123,14 +126,16 @@ public class PlayerController : MonoBehaviour
 
         if (isRotating)
         {
+            // Add forward movement while rotating
             rb.AddRelativeForce(Vector3.forward * (mainThrust * 0.5f * Time.deltaTime));
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             rb.AddRelativeForce(-Vector3.forward * (mainThrust * Time.deltaTime));
         }
     }
+
 
     void ApplyRotation(float rotationThisFrame)
     {

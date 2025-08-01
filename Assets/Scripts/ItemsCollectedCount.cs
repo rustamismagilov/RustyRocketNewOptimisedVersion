@@ -1,58 +1,33 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class ItemsCollectedCount: MonoBehaviour
+public class ItemsCollectedCount : MonoBehaviour
 {
     [Header("UI Texts")]
     [SerializeField] private TextMeshProUGUI burgersCountText;
     [SerializeField] private TextMeshProUGUI explosivesCountText;
     [SerializeField] private TextMeshProUGUI trashCountText;
 
-    private int burgersCount = 0;
-    private int explosivesCount = 0;
-    private int trashCount = 0;
-    
+    private CategoryItemSwitcher categoryItemSwitcher;
+
     void Start()
     {
-        UpdateBurgersText();
-        UpdateExplosivesText();
-        UpdateTrashText();
+        categoryItemSwitcher = FindFirstObjectByType<CategoryItemSwitcher>();
+        UpdateAllCounts();
     }
 
-
-    public void AddBurger()
+    public void UpdateAllCounts()
     {
-        burgersCount++;
-        UpdateBurgersText();
+        if (categoryItemSwitcher == null) return;
+
+        UpdateCountText(burgersCountText, categoryItemSwitcher.GetItemCount(Pickupable.CategoryType.Category2));
+        UpdateCountText(explosivesCountText, categoryItemSwitcher.GetItemCount(Pickupable.CategoryType.Category3));
+        UpdateCountText(trashCountText, categoryItemSwitcher.GetItemCount(Pickupable.CategoryType.Category1));
     }
 
-    public void AddExplosive()
+    private void UpdateCountText(TextMeshProUGUI textField, int count)
     {
-        explosivesCount++;
-        UpdateExplosivesText();
-    }
-
-    public void AddTrash()
-    {
-        trashCount++;
-        UpdateTrashText();
-    }
-
-    private void UpdateBurgersText()
-    {
-        if (burgersCountText != null)
-            burgersCountText.text = $"Burgers: {burgersCount}";
-    }
-
-    private void UpdateExplosivesText()
-    {
-        if (explosivesCountText != null)
-            explosivesCountText.text = $"Explosives: {explosivesCount}";
-    }
-
-    private void UpdateTrashText()
-    {
-        if (trashCountText != null)
-            trashCountText.text = $"Trash: {trashCount}";
+        if (textField != null)
+            textField.text = count.ToString();
     }
 }
