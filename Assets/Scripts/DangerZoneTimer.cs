@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using TMPro;
@@ -9,19 +10,26 @@ public class DangerZoneTimer : MonoBehaviour
     [SerializeField] ParticleSystem explosionEffect;
     [SerializeField] AudioClip countdownBeep;
     [SerializeField] float beepVolume = 0.3f;
-
+    [SerializeField] Transform respawnPoint; 
     private Coroutine dangerTime;
     private bool exploded = false;
 
-    void OnTriggerEnter(Collider other)
+    private void Start()
     {
+        timerText.enabled = false;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        timerText.enabled = true;
+
         if (other.CompareTag("Player") && dangerTime == null)
         {
             dangerTime = StartCoroutine(DangerCountdown());
         }
     }
 
-    void OnTriggerExit(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && dangerTime != null)
         {
@@ -54,11 +62,12 @@ public class DangerZoneTimer : MonoBehaviour
             ExplosionMethod();
         }
 
-        GameObject start = GameObject.FindWithTag("Start");
-        if (start != null && player != null)
+        
+        if (respawnPoint != null && player != null)
         {
-            player.transform.position = start.transform.position;
-            player.transform.rotation = start.transform.rotation;
+            player.transform.position = respawnPoint.transform.position;
+            player.transform.rotation = Quaternion.identity;
+            player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         }
 
         ResetTimerUI();
