@@ -27,6 +27,7 @@ public class DangerZoneTimer : MonoBehaviour
             Debug.Log("Exited Danger zone");
             StopCoroutine(dangerTime);
             dangerTime = null;
+            exploded = false;
             ResetTimerUI();
         }
     }
@@ -46,17 +47,18 @@ public class DangerZoneTimer : MonoBehaviour
             seconds--;
         }
 
-        yield return new WaitForSeconds(0.25f);
-
+        // Final second is up
         if (!exploded)
         {
-            ExplosionMethod();
+            ExplosionMethod();  // Call immediately
         }
 
+        // Respawn the player at the Start platform
         GameObject start = GameObject.FindWithTag("Start");
-        if (start != null)
+        if (start != null && player != null)
         {
             player.transform.position = start.transform.position;
+            player.transform.rotation = start.transform.rotation; // Optional
         }
 
         ResetTimerUI();
@@ -69,11 +71,10 @@ public class DangerZoneTimer : MonoBehaviour
 
         exploded = true;
 
-        if (explosionEffect != null)
+        if (explosionEffect != null && player != null)
         {
             Debug.Log("Explosion initiated!");
-            Vector3 spawnPos = player.transform.position;
-            ParticleSystem explosion = Instantiate(explosionEffect, spawnPos, Quaternion.identity);
+            ParticleSystem explosion = Instantiate(explosionEffect, player.transform.position, Quaternion.identity);
             Destroy(explosion.gameObject, explosion.main.duration + explosion.main.startLifetime.constantMax);
         }
     }

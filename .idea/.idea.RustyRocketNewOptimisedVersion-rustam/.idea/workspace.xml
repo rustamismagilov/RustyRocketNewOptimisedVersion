@@ -6,24 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="86bfdefc-4fa9-496b-8bfd-696d7fcd1c30" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RustyRocketNewOptimisedVersion-rustam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Test Enemy Animations/Enemy.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Test Enemy Animations/Enemy.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Characters/Alien Type 3/character (3).fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Characters/Alien Type 3/character (3).fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/comial-4448-font/Comial4448-8qRA SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/comial-4448-font/Comial4448-8qRA SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/engine-font/EngineRegular-PKpqd SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/StoryFonts/meowtant-kittens-font/MeowtantKittensDemoRegular-9MB5y SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/Baumarkt-nAJg SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/baumarkt-font/BaumarktBold-1j62 SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/oldtimer/Oldtimer SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/oldtimer/Oldtimer SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Imported assets/Barrel_Rust/Material/Drum_Rust.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported assets/Barrel_Rust/Material/Drum_Rust.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bullets/AlienBullet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bullets/AlienBullet.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported assets/UnityTechnologies/ParticlePack/EffectExamples/Fire &amp; Explosion Effects/Prefabs/BigExplosion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported assets/UnityTechnologies/ParticlePack/EffectExamples/Fire &amp; Explosion Effects/Prefabs/BigExplosion.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Introduction.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Introduction.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Planet1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Generic/Shooter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Generic/Shooter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DangerZoneTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DangerZoneTimer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/StoryTelling/StoryTellingCanvas.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StoryTelling/StoryTellingCanvas.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Terrain/New Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain/New Terrain.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Terrain/TerrainData_aa700bb0-c3b4-44b2-a00d-00c9b3f7b98e.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain/TerrainData_aa700bb0-c3b4-44b2-a00d-00c9b3f7b98e.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/foptitles SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/foptitles SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/ozda-font/Ozda-0vOKX SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/ozda-font/Ozda-0vOKX SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

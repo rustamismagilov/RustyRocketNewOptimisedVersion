@@ -47,18 +47,12 @@ public class PlayerController : MonoBehaviour
         float currentThrust = mainThrust;
         bool isThrusting = false;
 
-        // Speed modifiers
-        // If the left Alt key is pressed, apply linear damping
-        // to slow down the Player's movement
-        float targetDamping = Input.GetKey(KeyCode.LeftAlt) ? linearDampingToSlowdown : 0f;
-
-        // how fast to change damping: total delta (10) over 2 seconds
+        float targetDamping = Input.GetKey(KeyCode.LeftAlt)? linearDampingToSlowdown: 0f;
         float dampingChangeRate = linearDampingToSlowdown / linearDampingChangeRate;
+        rb.linearDamping = Mathf.MoveTowards(rb.linearDamping, targetDamping, dampingChangeRate * Time.deltaTime);
 
-        // move current damping toward target at that rate
-        rb.linearDamping = Mathf.MoveTowards(rb.linearDamping, targetDamping, dampingChangeRate * Time.deltaTime);        
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        // Boost using Left Control
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             currentThrust *= 2f;
         }
@@ -76,7 +70,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Forward thrust
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             rb.AddRelativeForce(Vector3.forward * (currentThrust * Time.deltaTime));
             isThrusting = true;
@@ -129,16 +123,14 @@ public class PlayerController : MonoBehaviour
 
         if (isRotating)
         {
-            // Add forward movement while rotating
             rb.AddRelativeForce(Vector3.forward * (mainThrust * 0.5f * Time.deltaTime));
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             rb.AddRelativeForce(-Vector3.forward * (mainThrust * Time.deltaTime));
         }
     }
-
 
     void ApplyRotation(float rotationThisFrame)
     {

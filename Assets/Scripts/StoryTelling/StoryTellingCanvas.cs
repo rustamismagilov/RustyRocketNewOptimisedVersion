@@ -11,20 +11,23 @@ public class StoryTellingCanvas : MonoBehaviour
 
     [Header("Canvas References")]
     [SerializeField] private GameObject storyCanvas;
-
     [SerializeField] private GameObject startCanvas;
+    [SerializeField] private GameObject playerControlCanvas;
 
     private int currentIndex = 0;
 
     void Start()
     {
+        if (startCanvas != null) startCanvas.SetActive(false);
+        if (playerControlCanvas != null) playerControlCanvas.SetActive(false);
+
         ShowSlide();
     }
 
     public void OnNextClicked()
     {
         currentIndex++;
-        
+
         if (currentIndex >= storySlides.Length)
         {
             EndStory();
@@ -45,6 +48,13 @@ public class StoryTellingCanvas : MonoBehaviour
 
     public void OnStartClicked()
     {
+        // Hide start canvas, show controls
+        if (startCanvas != null) startCanvas.SetActive(false);
+        if (playerControlCanvas != null) playerControlCanvas.SetActive(true);
+    }
+
+    public void OnControlsUnderstood()
+    {
         SceneManager.LoadScene("Planet1");
     }
 
@@ -54,9 +64,8 @@ public class StoryTellingCanvas : MonoBehaviour
         {
             storySlides[i].SetActive(i == currentIndex);
         }
-        
+
         backButton.gameObject.SetActive(currentIndex > 0);
-        
         nextButton.gameObject.SetActive(true);
     }
 
@@ -66,14 +75,11 @@ public class StoryTellingCanvas : MonoBehaviour
         {
             slide.SetActive(false);
         }
-        
+
         nextButton.gameObject.SetActive(false);
         backButton.gameObject.SetActive(false);
-        
-        if (storyCanvas != null)
-            storyCanvas.SetActive(false);
-        
-        if (startCanvas != null)
-            startCanvas.SetActive(true);
+
+        if (storyCanvas != null) storyCanvas.SetActive(false);
+        if (startCanvas != null) startCanvas.SetActive(true);
     }
 }
